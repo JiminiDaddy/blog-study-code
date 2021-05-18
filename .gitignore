@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 .DS_Store
-.gradle
+.gradle/
 /build/
 /target/
 /out/
