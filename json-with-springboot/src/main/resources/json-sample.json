@@ -1,0 +1,19 @@
+{
+  "name": "chpark",
+  "age": 34,
+  "job": "programmer",
+  "position": "server",
+  "favorite_language": "java",
+  "favorite_ide": "intellij",
+  "has_skills": {
+    "backend": [
+      "java", "spring", "netty", "javascript", "node.js"
+    ],
+    "frontend": [
+      "javascript", "react", "typescript"
+    ]
+  },
+  "will_skills": [
+    "unity", "flutter", "android", "webflux", "vr"
+  ]
+}

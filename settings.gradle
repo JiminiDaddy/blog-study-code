@@ -1,3 +1,4 @@
 rootProject.name = 'blog-study-code'
 include 'spring-boot-testcode-basic'
+include 'json-with-springboot'
 
