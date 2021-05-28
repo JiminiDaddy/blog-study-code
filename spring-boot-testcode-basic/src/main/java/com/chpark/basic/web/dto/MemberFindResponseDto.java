@@ -2,6 +2,7 @@ package com.chpark.basic.web.dto;
 
 import com.chpark.basic.domain.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Choen-hee Park
@@ -10,6 +11,7 @@ import lombok.Getter;
  * Time : 9:56 PM
  */
 
+@NoArgsConstructor
 @Getter
 public class MemberFindResponseDto {
     private Long id;
