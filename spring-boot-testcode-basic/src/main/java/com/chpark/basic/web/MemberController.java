@@ -3,6 +3,7 @@ package com.chpark.basic.web;
 import com.chpark.basic.service.MemberService;
 import com.chpark.basic.web.dto.MemberFindResponseDto;
 import com.chpark.basic.web.dto.MemberJoinRequestDto;
+import com.chpark.basic.web.dto.MemberJoinResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,10 +32,8 @@ public class MemberController {
     }
 
     @PostMapping("/member")
-    public Long joinMember(@RequestBody MemberJoinRequestDto requesteDto) {
+    public MemberJoinResponseDto joinMember(@RequestBody MemberJoinRequestDto requesteDto) {
         log.info("joinMember, name:<{}>, age:<{}>", requesteDto.getName(), requesteDto.getAge());
-        Long id = memberService.join(requesteDto);
-        log.info("joinMember, id:<{}>", id);
-        return id;
+        return memberService.join(requesteDto);
     }
 }

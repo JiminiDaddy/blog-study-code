@@ -3,6 +3,7 @@ package com.chpark.basic.web;
 import com.chpark.basic.service.MemberService;
 import com.chpark.basic.web.dto.MemberFindResponseDto;
 import com.chpark.basic.web.dto.MemberJoinRequestDto;
+import com.chpark.basic.web.dto.MemberJoinResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -34,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @WebMvcTest
-public class MemberControllerTest {
+class MemberControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,14 +50,18 @@ public class MemberControllerTest {
 
         // when
         // any : 어떤 타입으로 입력이 들어오든 넘어가기위해 설정
-        when(memberService.join(any())).thenReturn(1000L);
+        MemberJoinResponseDto responseDto = new MemberJoinResponseDto(requesteDto.toEntity());
+        when(memberService.join(any())).thenReturn(responseDto);
 
-        mockMvc.perform(post("/member")
+        final ResultActions actions = mockMvc.perform(post("/member")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(requesteDto)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("1000"))
                 .andDo(print());
+
+        DocumentContext documentContext = JsonPath.parse(actions.andReturn().getResponse().getContentAsString());
+        Assertions.assertThat(documentContext.read("name", String.class)).isEqualTo("chpark");
+        Assertions.assertThat((int)documentContext.read("age", Integer.class)).isEqualTo(34);
     }
 
     @Test

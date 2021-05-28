@@ -4,6 +4,7 @@ import com.chpark.basic.domain.Member;
 import com.chpark.basic.domain.MemberRepository;
 import com.chpark.basic.web.dto.MemberFindResponseDto;
 import com.chpark.basic.web.dto.MemberJoinRequestDto;
+import com.chpark.basic.web.dto.MemberJoinResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +30,8 @@ public class MemberService {
        return new MemberFindResponseDto(member);
     }
 
-    public Long join(final MemberJoinRequestDto requesteDto) {
+    public MemberJoinResponseDto join(final MemberJoinRequestDto requesteDto) {
         Member member = memberRepository.save(requesteDto.toEntity());
-        return member.getId();
+        return new MemberJoinResponseDto(member);
     }
 }
