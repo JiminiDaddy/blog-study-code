@@ -3,4 +3,5 @@ include 'spring-boot-testcode-basic'
 include 'json-with-springboot'
 include 'jpa-proxy'
 include 'access-modifier'
+include 'generic'
 
