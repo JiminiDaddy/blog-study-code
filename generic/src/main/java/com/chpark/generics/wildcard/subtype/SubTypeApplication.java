@@ -1,6 +1,6 @@
 package com.chpark.generics.wildcard.subtype;
 
-import com.chpark.generics.wildcard.domain.Employee;
+import com.chpark.generics.wildcard.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,13 @@ public class SubTypeApplication {
 		}
 	}
 
+	private static void printNames2(List<? extends Manager> staffs) {
+		for (Manager employee : staffs) {
+			System.out.println("employee name: " + employee.getName());
+			//staffs.add(employee);		// Compile Error!
+		}
+	}
+
 	public static void main(String[] args) {
 		List<Employee> employees = new ArrayList<>();
 		employees.add(new Employee("chpark"));
@@ -30,5 +37,28 @@ public class SubTypeApplication {
 		employees.add(new Employee("user2"));
 
 		printNames(employees);
+
+		// 파라미터 타입이 List<? extends Manager> 로써, Manager나 Manager의 하위 클래스를 타입으로 갖는 list만 가능하다.
+		//printNames2(employees);		// compile error!
+
+		StudentInfo studentInfo = new StudentInfo("park", "seoul-university");
+		HighSchoolStudentInfo highSchoolStudentInfo = new HighSchoolStudentInfo("kim", "seoul-highschool", 1);
+		EmployeeInfo employeeInfo = new EmployeeInfo("choi", 5_000_000);
+		PersonInfo personInfo = new PersonInfo("user");
+
+		// 테스트 편이를 위해 타입을 명시적으로 사용하지 않았다.
+		// Person의 GenericType을 < ? extends StudentInfo > 로 제한함으로써, Student 포함 그 하위 클래스만 가능하다.
+		Person person = new Person<>(studentInfo);
+		person.printInfo();	// success
+
+		// HighSchoolStudentInfo는 StudentInfo의 하위 클래스이므로 아래 코드는 정상적으로 실행된다.
+		person = new Person(highSchoolStudentInfo);
+		person.printInfo();	// success
+
+		// PersonInfo는 StudentInfo의 하위 클래스가 아니므로 타입 체크 오류가 발생하여 compile 오류가 발생한다.
+		//person = new Person(personInfo);		// compile error
+
+		// ExployeeInfo는 StudentInfo의 하위 클래스가 아니므로 타입 체크 오류가 발생하여 compile 오류가 발생한다.
+		//person = new Person(employeeInfo);		// compile error
 	}
 }
