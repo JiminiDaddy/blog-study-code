@@ -1,8 +1,13 @@
 package com.chpark.generics.wildcard.domain;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
 	private String name;
 	private int salary;
+
+	@Override
+	public int compareTo(Employee employee) {
+		return Integer.compare(this.salary, employee.salary) * -1;
+	}
 
 	public Employee(String name) {
 		this.name = name;
